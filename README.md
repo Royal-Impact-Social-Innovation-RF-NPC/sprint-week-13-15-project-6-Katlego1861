@@ -60,3 +60,32 @@ The following Arduino libraries are required:
 #include <waste_sorter_inferencing.h>
 
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/un518Rgz)
+---
+##Overall flowchart
+┌───────────────────────────────┐
+│       ESP32-CAM Module        │
+│ Captures image of waste item  │
+└──────────────┬────────────────┘
+               │
+               ▼
+┌───────────────────────────────┐
+│    Edge Impulse Model Runs    │
+│ Classifies image as:          │
+│  → Plastic                    │
+│  → Paper                      │
+│  → Organic                    │
+└──────────────┬────────────────┘
+               │
+               ▼
+┌───────────────────────────────┐
+│   Send Result via ESP-NOW     │
+│  (Label + Confidence Score)   │
+│   → Sent to second ESP32      │
+└──────────────┬────────────────┘
+               │
+               ▼
+┌───────────────────────────────┐
+│   Second ESP32 Receives Data  │
+│ Controls servo motors to move │
+│ item into correct bin         │
+└───────────────────────────────┘
